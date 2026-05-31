@@ -1,22 +1,16 @@
-// Принимает заявку с сайта и отправляет её тебе в Telegram.
-// На Vercel задай переменные окружения:
-//   TG_BOT_TOKEN  — токен бота от @BotFather
-//   TG_CHAT_ID    — твой chat_id (узнать через @userinfobot; боту нужно написать первым)
+// Принимает заявку и отправляет тебе в Telegram.
+// Переменные на Vercel: TG_BOT_TOKEN (от @BotFather), TG_CHAT_ID (твой Id от @userinfobot).
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    res.status(405).json({ error: 'method_not_allowed' })
-    return
-  }
+  if (req.method !== 'POST') { res.status(405).json({ error: 'method_not_allowed' }); return }
   try {
     let body = req.body
     if (typeof body === 'string') { try { body = JSON.parse(body) } catch { body = {} } }
     body = body || {}
 
-    const name = (body.name || '').toString().trim()
-    const phone = (body.phone || '').toString().trim()
-    const interest = (body.interest || '').toString().trim()
-    const comment = (body.comment || '').toString().trim()
+    const g = (k) => (body[k] || '').toString().trim()
+    const name = g('name'), phone = g('phone'), city = g('city'), car = g('car'),
+          country = g('country'), budget = g('budget'), contact = g('contact')
 
     if (!name || !phone) { res.status(400).json({ error: 'missing_fields' }); return }
 
@@ -28,8 +22,11 @@ export default async function handler(req, res) {
       `🚗 Новая заявка — Genesis Auto\n\n` +
       `👤 Имя: ${name}\n` +
       `📞 Телефон: ${phone}\n` +
-      `🔧 Интересует: ${interest || '—'}\n` +
-      `💬 Комментарий: ${comment || '—'}`
+      `🏙 Город: ${city || '—'}\n` +
+      `🚘 Интересует: ${car || '—'}\n` +
+      `🌏 Страна: ${country || '—'}\n` +
+      `💰 Бюджет: ${budget || '—'}\n` +
+      `📨 Связь: ${contact || '—'}`
 
     const tg = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: 'POST',
