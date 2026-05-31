@@ -31,7 +31,8 @@ async function load() {
 }
 
 onMounted(() => {
-  load()
+  setTimeout(load, 500)
+
   timer = setInterval(load, 90000)
 })
 </script>
