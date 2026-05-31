@@ -6,6 +6,7 @@ const channelUrl = `https://t.me/${CHANNEL}`
 
 const posts = ref([])
 const status = ref('loading') // loading | ok | fallback
+const openItems = ref({})     // какие карточки развёрнуты
 let timer = null
 
 function fmtDate(iso) {
@@ -31,7 +32,7 @@ async function load() {
 
 onMounted(() => {
   load()
-  timer = setInterval(load, 90000) // обновление каждые 1.5 мин
+  timer = setInterval(load, 90000)
 })
 onUnmounted(() => clearInterval(timer))
 </script>
@@ -64,12 +65,12 @@ onUnmounted(() => clearInterval(timer))
           v-for="(p, i) in posts" :key="p.id || i"
           class="flex flex-col overflow-hidden rounded-2xl border border-line bg-white"
         >
-          <!-- Видео (играет прямо на сайте) -->
+          <!-- Видео -->
           <div v-if="p.video" class="bg-black">
             <video :src="p.video" :poster="p.poster || undefined" controls preload="metadata"
                    class="w-full max-h-[460px] mx-auto block"></video>
           </div>
-          <!-- Иначе фото (единый формат 3:2 — аккуратно) -->
+          <!-- Фото (единый формат 3:2) -->
           <a v-else-if="p.photo || p.poster" :href="p.url" target="_blank" rel="noopener"
              class="block aspect-[3/2] overflow-hidden group">
             <img :src="p.photo || p.poster" alt="Объявление" loading="lazy"
@@ -77,7 +78,18 @@ onUnmounted(() => clearInterval(timer))
           </a>
 
           <div class="flex flex-1 flex-col p-6">
-            <p class="text-cloud leading-relaxed whitespace-pre-line">{{ p.text || 'Открыть объявление в Telegram' }}</p>
+            <!-- Текст: свёрнут по умолчанию, разворачивается кнопкой -->
+            <div class="relative" :style="openItems[i] ? '' : 'max-height: 15rem; overflow: hidden;'">
+              <p class="text-cloud leading-relaxed whitespace-pre-line">{{ p.text || 'Открыть объявление в Telegram' }}</p>
+              <div v-if="!openItems[i] && (p.text || '').length > 280"
+                   class="pointer-events-none absolute bottom-0 left-0 right-0 h-14 bg-gradient-to-t from-white"></div>
+            </div>
+            <button v-if="(p.text || '').length > 280"
+                    @click="openItems[i] = !openItems[i]"
+                    class="mt-3 self-start text-gold font-semibold text-sm hover:text-gold-soft transition-colors">
+              {{ openItems[i] ? 'Свернуть' : 'Читать полностью' }}
+            </button>
+
             <div class="mt-5 pt-4 border-t border-line flex items-center justify-between text-sm">
               <span class="text-fog">{{ fmtDate(p.date) }}</span>
               <a :href="p.url" target="_blank" rel="noopener" class="text-gold font-semibold hover:text-gold-soft transition-colors">
