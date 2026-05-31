@@ -2,7 +2,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 
 // ⚙️ Username вашего Telegram-канала (без @). Тот же впиши в TG_CHANNEL на Vercel.
-const CHANNEL = 'avtomobil1244'
+const CHANNEL = 'avtomobile1244'
 const channelUrl = `https://t.me/${CHANNEL}`
 
 const posts = ref([])
@@ -55,26 +55,25 @@ onUnmounted(() => clearInterval(timer))
       </div>
 
       <!-- Загрузка -->
-      <div v-if="status === 'loading'" class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        <div v-for="n in 3" :key="n" class="h-72 rounded-2xl bg-white border border-line animate-pulse"></div>
+      <div v-if="status === 'loading'" class="mt-12 grid gap-5 sm:grid-cols-2">
+        <div v-for="n in 2" :key="n" class="h-72 rounded-2xl bg-white border border-line animate-pulse"></div>
       </div>
 
       <!-- Лента постов -->
-      <div v-else-if="status === 'ok'" class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        <a
-          v-for="(p, i) in posts" :key="p.id || i"
-          :href="p.url" target="_blank" rel="noopener"
-          class="group flex flex-col overflow-hidden rounded-2xl border border-line bg-white transition-all hover:-translate-y-1 hover:border-gold/50"
+      <div v-else-if="status === 'ok'" class="mt-12 grid gap-5 sm:grid-cols-2 items-start">
+        <a v-for="(p, i) in posts" :key="p.id || i"
+           :href="p.url" target="_blank" rel="noopener"
+           class="group flex flex-col overflow-hidden rounded-2xl border border-line bg-white transition-all hover:border-gold/50"
         >
           <div v-if="p.photo" class="aspect-[3/2] overflow-hidden">
             <img :src="p.photo" :alt="'Объявление'" loading="lazy"
                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
           </div>
-          <div class="flex flex-1 flex-col p-5">
-            <p class="text-cloud leading-relaxed whitespace-pre-line line-clamp-5">{{ p.text || 'Открыть объявление в Telegram' }}</p>
-            <div class="mt-auto pt-4 flex items-center justify-between text-sm">
+          <div class="flex flex-1 flex-col p-6">
+            <p class="text-cloud leading-relaxed whitespace-pre-line">{{ p.text || 'Открыть объявление в Telegram' }}</p>
+            <div class="mt-5 pt-4 border-t border-line flex items-center justify-between text-sm">
               <span class="text-fog">{{ fmtDate(p.date) }}</span>
-              <span class="text-gold font-semibold">Подробнее →</span>
+              <span class="text-gold font-semibold">Открыть в Telegram →</span>
             </div>
           </div>
         </a>
@@ -92,5 +91,3 @@ onUnmounted(() => clearInterval(timer))
     </div>
   </section>
 </template>
-EOF
-echo "listings done"
