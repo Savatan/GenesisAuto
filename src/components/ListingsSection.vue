@@ -69,12 +69,11 @@ onUnmounted(() => clearInterval(timer))
             <video :src="p.video" :poster="p.poster || undefined" controls preload="metadata"
                    class="w-full max-h-[460px] mx-auto block"></video>
           </div>
-          <!-- Иначе фото -->
-          <!-- Иначе фото (целиком, без обрезки) -->
+          <!-- Иначе фото (единый формат 3:2 — аккуратно) -->
           <a v-else-if="p.photo || p.poster" :href="p.url" target="_blank" rel="noopener"
-             class="block overflow-hidden bg-graphite">
+             class="block aspect-[3/2] overflow-hidden group">
             <img :src="p.photo || p.poster" alt="Объявление" loading="lazy"
-                 class="w-full h-auto block" />
+                 class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
           </a>
 
           <div class="flex flex-1 flex-col p-6">

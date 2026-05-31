@@ -48,8 +48,13 @@ export default async function handler(req, res) {
         poster,
         date,
       }
-    }).filter((p) => p.text || p.photo || p.video || p.poster)
-
+    }).filter((p) => {
+      const hasMedia = p.photo || p.video || p.poster
+      if (!p.text && !hasMedia) return false
+      // отсекаем служебные сообщения Telegram («Channel created» и т.п.)
+      if (!hasMedia && /^(channel created|канал создан|channel photo|group created|.*pinned.*)/i.test(p.text.trim())) return false
+      return true
+    })
     posts.reverse() // новые сверху
 
     res.setHeader('Cache-Control', 's-maxage=120, stale-while-revalidate=600')
