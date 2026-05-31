@@ -4,7 +4,6 @@ const secondary = ['МОТО', 'СПЕЦТЕХНИКА', 'ЗАПЧАСТИ']
 
 <template>
   <section id="hero" class="relative min-h-screen flex flex-col justify-center overflow-hidden">
-    <!-- Фон -->
     <div class="absolute inset-0 z-0">
       <div class="absolute inset-0 bg-cover bg-center opacity-70" style="background-image: url('/hero.jpg');"></div>
       <div class="absolute inset-0 bg-gradient-to-b from-ink/60 via-transparent to-ink"></div>
@@ -12,26 +11,25 @@ const secondary = ['МОТО', 'СПЕЦТЕХНИКА', 'ЗАПЧАСТИ']
     </div>
 
     <div class="relative z-10 w-full pt-20">
-      <!-- Название + авто внахлёст -->
       <div class="relative text-center px-4">
-        <h1 class="font-display font-extrabold uppercase leading-[0.88] tracking-tighter
+        <h1 class="anim-fade font-display font-extrabold uppercase leading-[0.88] tracking-tighter
                    text-6xl sm:text-8xl md:text-[7rem] lg:text-[9rem]
-                   bg-gradient-to-b from-white via-white to-white/35 bg-clip-text text-transparent">
+                   bg-gradient-to-b from-white via-white to-white/35 bg-clip-text text-transparent"
+            style="animation-delay:.05s">
           Genesis Auto
         </h1>
         <img src="/car.png" alt="Авто под заказ"
-             class="relative z-10 mx-auto w-[94%] max-w-4xl -mt-[7%] md:-mt-[6%] drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]" />
+             class="anim-up relative z-10 mx-auto w-[94%] max-w-4xl -mt-[7%] md:-mt-[6%] drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
+             style="animation-delay:.3s" />
       </div>
 
-      <!-- Нижний контент -->
       <div class="mx-auto max-w-6xl px-5 mt-6 grid gap-10 md:grid-cols-2 md:items-end">
-        <div>
-          <h2 class="reveal font-display font-semibold text-3xl md:text-4xl leading-tight text-cloud" v-reveal>
+        <div class="anim-up" style="animation-delay:.5s">
+          <h2 class="font-display font-semibold text-3xl md:text-4xl leading-tight text-cloud">
             Авто из Китая, Кореи и Японии
           </h2>
 
-          <!-- Кнопки: главная + вторичные -->
-          <div class="reveal mt-7 flex flex-wrap items-center gap-3" v-reveal="150">
+          <div class="mt-7 flex flex-wrap items-center gap-3">
             <a href="#lead"
                class="group inline-flex items-center gap-2 rounded-full bg-gold px-8 py-4 text-base font-bold text-white
                       shadow-lg shadow-gold/30 transition-all duration-300
@@ -45,15 +43,14 @@ const secondary = ['МОТО', 'СПЕЦТЕХНИКА', 'ЗАПЧАСТИ']
             </a>
           </div>
 
-          <!-- Trust-сигналы -->
-          <div class="reveal mt-7 flex flex-wrap gap-x-6 gap-y-2.5 text-sm text-cloud/80" v-reveal="250">
+          <div class="mt-7 flex flex-wrap gap-x-6 gap-y-2.5 text-sm text-cloud/80">
             <span class="flex items-center gap-2"><span class="text-gold-soft">✓</span> Официальный договор</span>
             <span class="flex items-center gap-2"><span class="text-gold-soft">✓</span> Без посредников</span>
             <span class="flex items-center gap-2"><span class="text-gold-soft">✓</span> Владивосток</span>
           </div>
         </div>
 
-        <div class="reveal md:text-right" v-reveal="300">
+        <div class="anim-up md:text-right" style="animation-delay:.65s">
           <p class="text-lg text-cloud/75 leading-relaxed md:ml-auto md:max-w-sm">
             Заказ автомобилей, мотоциклов, спецтехники и автозапчастей под ключ — по официальному договору, без переплат посредникам.
           </p>
@@ -66,3 +63,13 @@ const secondary = ['МОТО', 'СПЕЦТЕХНИКА', 'ЗАПЧАСТИ']
     </div>
   </section>
 </template>
+
+<style scoped>
+@keyframes ga-fade { from { opacity: 0 } to { opacity: 1 } }
+@keyframes ga-up { from { opacity: 0; transform: translateY(36px) } to { opacity: 1; transform: translateY(0) } }
+.anim-fade { opacity: 0; animation: ga-fade 2.8s ease forwards; }
+.anim-up { opacity: 0; animation: ga-up 2.5s cubic-bezier(.16, 1, .3, 1) forwards; }
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade, .anim-up { animation: none; opacity: 1; transform: none; }
+}
+</style>
