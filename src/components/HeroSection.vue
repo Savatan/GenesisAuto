@@ -1,11 +1,8 @@
 <script setup>
-// Полноэкранный hero с фоновым фото (как на референсе).
-// Замени /public/hero.jpg на своё фото авто (тёмное, широкое, ~1920px).
 </script>
 
 <template>
   <section id="hero" class="relative min-h-screen flex items-center overflow-hidden">
-    <!-- Фоновое изображение + затемнение для читаемости текста -->
     <div class="absolute inset-0 z-0">
       <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('/hero.jpg');"></div>
       <div class="absolute inset-0 bg-gradient-to-r from-[#070d1c]/95 via-[#070d1c]/75 to-[#070d1c]/30"></div>
@@ -40,9 +37,9 @@
 
       <!-- Гарантии (из ТЗ) -->
       <div class="reveal mt-14 flex flex-wrap gap-x-10 gap-y-4 text-sm text-white/80" v-reveal="400">
-        <span class="flex items-center gap-2"><span class="text-gold-soft">●</span> Официальный договор</span>
+        <span class="flex items-center gap-2"><span class="text-gold-soft">●</span> Работа по официальному договору (с переходом на договор)</span>
         <span class="flex items-center gap-2"><span class="text-gold-soft">●</span> Без переплат посредникам</span>
-        <span class="flex items-center gap-2"><span class="text-gold-soft">●</span> Документы на ваше имя</span>
+        <span class="flex items-center gap-2"><span class="text-gold-soft">●</span> Оформление документов на ваше имя</span>
       </div>
     </div>
   </section>
