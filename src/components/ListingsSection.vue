@@ -2,7 +2,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 
 // ⚙️ Username вашего Telegram-канала (без @). Тот же впиши в TG_CHANNEL на Vercel.
-const CHANNEL = 'genesis_auto'
+const CHANNEL = 'avtomobil1244'
 const channelUrl = `https://t.me/${CHANNEL}`
 
 const posts = ref([])
