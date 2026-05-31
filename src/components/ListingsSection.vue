@@ -6,7 +6,7 @@ const channelUrl = `https://t.me/${CHANNEL}`
 
 const posts = ref([])
 const status = ref('loading') // loading | ok | fallback
-const openItems = ref({})     // какие карточки развёрнуты
+const openItems = ref({})
 let timer = null
 
 function fmtDate(iso) {
@@ -56,41 +56,38 @@ onUnmounted(() => clearInterval(timer))
 
       <!-- Загрузка -->
       <div v-if="status === 'loading'" class="mt-12 grid gap-5 sm:grid-cols-2">
-        <div v-for="n in 2" :key="n" class="h-72 rounded-2xl bg-white border border-line animate-pulse"></div>
+        <div v-for="n in 2" :key="n" class="h-80 rounded-2xl bg-white border border-line animate-pulse"></div>
       </div>
 
       <!-- Лента постов -->
-      <div v-else-if="status === 'ok'" class="mt-12 grid gap-5 sm:grid-cols-2 items-start">
+      <div v-else-if="status === 'ok'" class="mt-12 grid gap-5 sm:grid-cols-2">
         <div
           v-for="(p, i) in posts" :key="p.id || i"
           class="flex flex-col overflow-hidden rounded-2xl border border-line bg-white"
         >
-          <!-- Видео -->
-          <div v-if="p.video" class="bg-black">
+          <!-- Видео (единый формат 16:9) -->
+          <div v-if="p.video" class="aspect-video bg-black overflow-hidden">
             <video :src="p.video" :poster="p.poster || undefined" controls preload="metadata"
-                   class="w-full max-h-[460px] mx-auto block"></video>
+                   class="h-full w-full object-cover"></video>
           </div>
-          <!-- Фото (единый формат 3:2) -->
+          <!-- Фото (единый формат 16:9) -->
           <a v-else-if="p.photo || p.poster" :href="p.url" target="_blank" rel="noopener"
-             class="block aspect-[3/2] overflow-hidden group">
+             class="block aspect-video overflow-hidden group">
             <img :src="p.photo || p.poster" alt="Объявление" loading="lazy"
                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
           </a>
 
           <div class="flex flex-1 flex-col p-6">
-            <!-- Текст: свёрнут по умолчанию, разворачивается кнопкой -->
-            <div class="relative" :style="openItems[i] ? '' : 'max-height: 15rem; overflow: hidden;'">
-              <p class="text-cloud leading-relaxed whitespace-pre-line">{{ p.text || 'Открыть объявление в Telegram' }}</p>
-              <div v-if="!openItems[i] && (p.text || '').length > 280"
-                   class="pointer-events-none absolute bottom-0 left-0 right-0 h-14 bg-gradient-to-t from-white"></div>
-            </div>
-            <button v-if="(p.text || '').length > 280"
+            <p class="text-cloud leading-relaxed whitespace-pre-line"
+               :class="openItems[i] ? '' : 'line-clamp-4'">{{ p.text || 'Открыть объявление в Telegram' }}</p>
+
+            <button v-if="(p.text || '').length > 160"
                     @click="openItems[i] = !openItems[i]"
                     class="mt-3 self-start text-gold font-semibold text-sm hover:text-gold-soft transition-colors">
               {{ openItems[i] ? 'Свернуть' : 'Читать полностью' }}
             </button>
 
-            <div class="mt-5 pt-4 border-t border-line flex items-center justify-between text-sm">
+            <div class="mt-auto pt-4 border-t border-line flex items-center justify-between text-sm">
               <span class="text-fog">{{ fmtDate(p.date) }}</span>
               <a :href="p.url" target="_blank" rel="noopener" class="text-gold font-semibold hover:text-gold-soft transition-colors">
                 Открыть в Telegram →
