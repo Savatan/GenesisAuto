@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 
-const CHANNEL = 'avtomobil1244'
+const CHANNEL = 'genesisvostok'
 const channelUrl = `https://t.me/${CHANNEL}`
 
 const posts = ref([])
