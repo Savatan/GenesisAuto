@@ -1,0 +1,96 @@
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+
+// ⚙️ Username вашего Telegram-канала (без @). Тот же впиши в TG_CHANNEL на Vercel.
+const CHANNEL = 'genesis_auto'
+const channelUrl = `https://t.me/${CHANNEL}`
+
+const posts = ref([])
+const status = ref('loading') // loading | ok | fallback
+let timer = null
+
+function fmtDate(iso) {
+  if (!iso) return ''
+  try {
+    return new Date(iso).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' })
+  } catch { return '' }
+}
+
+async function load() {
+  try {
+    const r = await fetch('/api/telegram')
+    if (!r.ok) throw new Error()
+    const data = await r.json()
+    if (Array.isArray(data) && data.length) {
+      posts.value = data.slice(0, 9)
+      status.value = 'ok'
+      return
+    }
+  } catch { /* ниже покажем запасной блок */ }
+  status.value = 'fallback'
+}
+
+onMounted(() => {
+  load()
+  timer = setInterval(load, 90000) // обновление каждые 1.5 мин
+})
+onUnmounted(() => clearInterval(timer))
+</script>
+
+<template>
+  <section id="listings" class="relative py-24 md:py-32 bg-graphite">
+    <div class="mx-auto max-w-6xl px-5">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p class="reveal text-xs tracking-[0.3em] uppercase text-gold" v-reveal>Каталог</p>
+          <h2 class="reveal mt-3 font-display font-bold text-3xl md:text-4xl" v-reveal="100">
+            Актуальные объявления
+          </h2>
+          <p class="reveal mt-3 text-fog" v-reveal="150">Свежие авто из нашего Telegram-канала.</p>
+        </div>
+        <a :href="channelUrl" target="_blank" rel="noopener"
+           class="reveal text-gold font-semibold hover:text-gold-soft transition-colors" v-reveal="150">
+          Открыть канал →
+        </a>
+      </div>
+
+      <!-- Загрузка -->
+      <div v-if="status === 'loading'" class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div v-for="n in 3" :key="n" class="h-72 rounded-2xl bg-white border border-line animate-pulse"></div>
+      </div>
+
+      <!-- Лента постов -->
+      <div v-else-if="status === 'ok'" class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <a
+          v-for="(p, i) in posts" :key="p.id || i"
+          :href="p.url" target="_blank" rel="noopener"
+          class="group flex flex-col overflow-hidden rounded-2xl border border-line bg-white transition-all hover:-translate-y-1 hover:border-gold/50"
+        >
+          <div v-if="p.photo" class="aspect-[3/2] overflow-hidden">
+            <img :src="p.photo" :alt="'Объявление'" loading="lazy"
+                 class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+          </div>
+          <div class="flex flex-1 flex-col p-5">
+            <p class="text-cloud leading-relaxed whitespace-pre-line line-clamp-5">{{ p.text || 'Открыть объявление в Telegram' }}</p>
+            <div class="mt-auto pt-4 flex items-center justify-between text-sm">
+              <span class="text-fog">{{ fmtDate(p.date) }}</span>
+              <span class="text-gold font-semibold">Подробнее →</span>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Запасной блок (функция ещё не подключена / нет постов) -->
+      <div v-else class="mt-12 rounded-3xl border border-line bg-white p-10 text-center">
+        <p class="text-lg font-display font-semibold text-cloud">Объявления публикуются в нашем Telegram-канале</p>
+        <p class="mt-2 text-fog">Там — свежие авто с фото, ценами и описанием.</p>
+        <a :href="channelUrl" target="_blank" rel="noopener"
+           class="mt-6 inline-flex rounded-full bg-gold px-8 py-4 font-semibold text-white hover:bg-gold-soft transition-colors">
+          Смотреть объявления в Telegram
+        </a>
+      </div>
+    </div>
+  </section>
+</template>
+EOF
+echo "listings done"
