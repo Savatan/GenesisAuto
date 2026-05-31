@@ -1,42 +1,91 @@
-// Принимает заявку и отправляет тебе в Telegram.
-// Переменные на Vercel: TG_BOT_TOKEN (от @BotFather), TG_CHAT_ID (твой Id от @userinfobot).
-
 export default async function handler(req, res) {
-  if (req.method !== 'POST') { res.status(405).json({ error: 'method_not_allowed' }); return }
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' })
+  }
+
   try {
-    let body = req.body
-    if (typeof body === 'string') { try { body = JSON.parse(body) } catch { body = {} } }
-    body = body || {}
+    const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body
 
-    const g = (k) => (body[k] || '').toString().trim()
-    const name = g('name'), phone = g('phone'), city = g('city'), car = g('car'),
-          country = g('country'), budget = g('budget'), contact = g('contact')
+    const {
+      name = 'Не указано',
+      phone = 'Не указан',
+      city = 'Не указан',
+      car = 'Не указан',
+      country = 'Не указан',
+      budget,
+      contact = 'Не указан',
+    } = body || {}
 
-    if (!name || !phone) { res.status(400).json({ error: 'missing_fields' }); return }
+    // =========================
+    // TELEGRAM
+    // =========================
 
-    const token = process.env.TG_BOT_TOKEN
-    const chatId = process.env.TG_CHAT_ID
-    if (!token || !chatId) { res.status(500).json({ error: 'not_configured' }); return }
+    const tgMessage = `
+🚘 Новая заявка Genesis Auto
 
-    const text =
-      `🚗 Новая заявка — Genesis Auto\n\n` +
-      `👤 Имя: ${name}\n` +
-      `📞 Телефон: ${phone}\n` +
-      `🏙 Город: ${city || '—'}\n` +
-      `🚘 Интересует: ${car || '—'}\n` +
-      `🌏 Страна: ${country || '—'}\n` +
-      `💰 Бюджет: ${budget || '—'}\n` +
-      `📨 Связь: ${contact || '—'}`
+👤 Имя: ${name}
+📞 Телефон: ${phone}
+🏙 Город: ${city}
 
-    const tg = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: chatId, text }),
-    })
-    if (!tg.ok) throw new Error('tg_failed')
+🚗 Автомобиль: ${car}
+🌍 Страна: ${country}
+💰 Бюджет: ${budget || 'Не указан'}
 
-    res.status(200).json({ ok: true })
+📲 Способ связи: ${contact}
+`
+
+    await fetch(
+      `https://api.telegram.org/bot${process.env.TG_BOT_TOKEN}/sendMessage`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: process.env.TG_CHAT_ID,
+          text: tgMessage,
+        }),
+      }
+    )
+
+    // =========================
+    // BITRIX CRM (WEBHOOK ВСТРОЕН)
+    // =========================
+
+    await fetch(
+      `https://b24-cq1qom.bitrix24.ru/rest/1/5vaga30iglkrs6ep/crm.lead.add.json`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fields: {
+            TITLE: 'Заявка с сайта Genesis Auto',
+            NAME: name,
+            PHONE: [
+              {
+                VALUE: phone,
+                VALUE_TYPE: 'WORK',
+              },
+            ],
+            COMMENTS: `
+Город: ${city}
+
+Автомобиль: ${car}
+
+Страна: ${country}
+
+Бюджет: ${budget || 'Не указан'}
+
+Способ связи: ${contact}
+            `,
+            SOURCE_DESCRIPTION: 'Сайт Genesis Auto',
+          },
+        }),
+      }
+    )
+
+    return res.status(200).json({ success: true })
   } catch (e) {
-    res.status(500).json({ error: 'failed' })
+    console.error(e)
+
+    return res.status(500).json({ error: 'Server error' })
   }
 }

@@ -9,7 +9,7 @@ const countries = ['Япония', 'Корея', 'Китай']
 const contacts = ['Телефон', 'Telegram', 'WhatsApp', 'MAX']
 
 const errors = reactive({})
-const status = ref('idle') // idle | sending | success | error
+const status = ref('idle') 
 
 function validate() {
   const req = { name: 'Имя', phone: 'Телефон', city: 'Ваш город', car: 'Какой авто', country: 'Страна', contact: 'Способ связи' }
