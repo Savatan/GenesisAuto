@@ -42,6 +42,7 @@ const year = new Date().getFullYear()
 
       <div class="mt-10 pt-6 border-t border-line text-xs text-fog/70 flex flex-col sm:flex-row justify-between gap-2">
         <span>© {{ year }} Genesis Auto. Все права защищены.</span>
+        <span>Сделано с любовью к авто 💙</span>
       </div>
     </div>
   </footer>

@@ -1,46 +1,62 @@
 <script setup>
+// Кинематографичный первый экран. Фон — /public/hero.jpg.
+// Замени его качественным тёмным фото авто (например, чёрный спорткар на тёмном фоне).
+const services = ['Заказать АВТО', 'Заказать МОТО', 'Заказать СПЕЦТЕХНИКУ', 'Автозапчасти']
 </script>
 
 <template>
-  <section id="hero" class="relative min-h-screen flex items-center overflow-hidden">
+  <section id="hero" class="relative min-h-screen flex flex-col overflow-hidden">
+    <!-- Фон -->
     <div class="absolute inset-0 z-0">
       <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('/hero.jpg');"></div>
-      <div class="absolute inset-0 bg-gradient-to-r from-[#070d1c]/95 via-[#070d1c]/75 to-[#070d1c]/30"></div>
-      <div class="absolute inset-0 bg-gradient-to-t from-[#070d1c] via-transparent to-[#070d1c]/40"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/30 to-ink"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-ink/60"></div>
+      <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[60rem] h-[40rem] rounded-full bg-gold/10 blur-[160px]"></div>
     </div>
 
-    <div class="relative z-10 mx-auto max-w-6xl px-5 pt-28 pb-16 w-full">
-      <div class="reveal flex items-center gap-3" v-reveal>
-        <img src="/logo.png" alt="Genesis Auto" class="h-11 w-auto bg-white rounded-lg p-1.5" />
-        <span class="text-xs tracking-[0.28em] uppercase text-gold-soft border border-white/20 rounded-full px-4 py-1.5 text-white/90">
-          Владивосток · под заказ
-        </span>
-      </div>
-
-      <h1 class="reveal mt-7 font-display font-extrabold leading-[1.04] text-5xl sm:text-6xl md:text-7xl text-white" v-reveal="100">
-        Genesis <span class="text-gold-soft">Auto</span>
+    <!-- Гигантское название -->
+    <div class="relative z-10 flex-1 flex items-center justify-center px-4 pt-24">
+      <h1 class="text-center font-display font-extrabold uppercase leading-[0.95] tracking-tight
+                 text-5xl sm:text-7xl md:text-8xl lg:text-[9.5rem]
+                 bg-gradient-to-b from-white via-white to-white/40 bg-clip-text text-transparent
+                 drop-shadow-[0_8px_40px_rgba(4,106,253,0.25)]">
+        Genesis<br class="sm:hidden" /> Auto
       </h1>
+    </div>
 
-      <p class="reveal mt-5 max-w-xl text-lg md:text-xl text-white/75" v-reveal="200">
-        Автомобили, мотоциклы и спецтехника из
-        <span class="text-white font-medium">Китая, Кореи и Японии</span> — подбор и доставка под ключ.
-      </p>
+    <!-- Нижний контент -->
+    <div class="relative z-10 mx-auto max-w-6xl px-5 pb-14 md:pb-20 w-full">
+      <div class="grid gap-8 md:grid-cols-2 md:items-end">
+        <div>
+          <span class="reveal inline-block text-xs tracking-[0.28em] uppercase text-gold-soft border border-gold/30 rounded-full px-4 py-1.5" v-reveal>
+            Владивосток · под заказ
+          </span>
+          <h2 class="reveal mt-5 font-display font-semibold text-3xl md:text-4xl leading-tight" v-reveal="100">
+            Авто из Китая, Кореи и Японии
+          </h2>
 
-      <div class="reveal mt-9 flex flex-wrap gap-4" v-reveal="300">
-        <a href="#lead" class="rounded-full bg-gold px-8 py-4 font-semibold text-white shadow-lg shadow-gold/30 hover:bg-gold-soft transition-colors">
-          Заказать авто
-        </a>
-        <a href="#how" class="rounded-full border border-white/25 bg-white/5 backdrop-blur px-8 py-4 font-semibold text-white hover:bg-white/10 transition-colors">
-          Как мы работаем
-        </a>
+          <div class="reveal mt-7 flex flex-wrap gap-3" v-reveal="200">
+            <a v-for="(s, i) in services" :key="s" href="#lead"
+               class="rounded-full px-6 py-3.5 text-sm font-semibold transition-colors"
+               :class="i === 0
+                 ? 'bg-gold text-white hover:bg-gold-soft'
+                 : 'border border-white/20 bg-white/5 backdrop-blur text-cloud hover:border-gold/60 hover:bg-white/10'">
+              {{ s }}
+            </a>
+          </div>
+        </div>
+
+        <div class="reveal md:text-right md:pb-1" v-reveal="300">
+          <p class="text-fog leading-relaxed md:ml-auto md:max-w-sm">
+            Заказ автомобилей, мотоциклов, спецтехники и автозапчастей под ключ — по официальному договору, без переплат посредникам.
+          </p>
+        </div>
       </div>
+    </div>
 
-      <!-- Гарантии (из ТЗ) -->
-      <div class="reveal mt-14 flex flex-wrap gap-x-10 gap-y-4 text-sm text-white/80" v-reveal="400">
-        <span class="flex items-center gap-2"><span class="text-gold-soft">●</span> Работа по официальному договору (с переходом на договор)</span>
-        <span class="flex items-center gap-2"><span class="text-gold-soft">●</span> Без переплат посредникам</span>
-        <span class="flex items-center gap-2"><span class="text-gold-soft">●</span> Оформление документов на ваше имя</span>
-      </div>
+    <!-- Подсказка прокрутки -->
+    <div class="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 text-fog/60 animate-bounce">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
   </section>
 </template>

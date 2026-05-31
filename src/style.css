@@ -1,23 +1,21 @@
 @import "tailwindcss";
 
-/* ---- Дизайн-токены (под логотип: синий #046AFD на белом) ---- */
+/* ---- Тёмная премиальная палитра (синий акцент логотипа) ---- */
 @theme {
-  --color-ink: #ffffff;        /* фон страницы + текст на синих кнопках (белый) */
-  --color-graphite: #f4f7fc;   /* светлые карточки/секции */
-  --color-graphite-2: #eaf0fa; /* hover карточек */
-  --color-line: #e2e8f2;       /* границы */
-  --color-fog: #5b6675;        /* приглушённый текст */
-  --color-cloud: #0a1426;      /* основной тёмно-синий текст */
-  --color-gold: #046afd;       /* фирменный синий (акцент) */
-  --color-gold-soft: #0a57d6;  /* синий для hover-кнопок */
+  --color-ink: #0a0c11;        /* фон страницы (почти чёрный с синевой) */
+  --color-graphite: #13161d;   /* карточки */
+  --color-graphite-2: #1b1f28; /* hover карточек */
+  --color-line: #272c37;       /* границы */
+  --color-fog: #8a94a4;        /* приглушённый текст */
+  --color-cloud: #eef1f6;      /* основной светлый текст */
+  --color-gold: #046afd;       /* фирменный синий */
+  --color-gold-soft: #3b86ff;  /* светлый синий для hover/акцентов */
 
   --font-display: "Geologica", "Manrope", sans-serif;
   --font-body: "Manrope", sans-serif;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   background-color: var(--color-ink);
@@ -26,19 +24,16 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ---- Scroll-reveal: элементы появляются при прокрутке ---- */
+/* Scroll-reveal */
 .reveal {
   opacity: 0;
   transform: translateY(28px);
   transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
 
-/* Тонкая «техно»-сетка для светлых секций (под минимализм логотипа) */
+/* Точечная сетка для фона */
 .dotgrid {
-  background-image: radial-gradient(circle, rgba(4, 106, 253, 0.10) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(4, 106, 253, 0.14) 1px, transparent 1px);
   background-size: 26px 26px;
 }
