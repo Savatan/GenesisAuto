@@ -1,15 +1,14 @@
 @import "tailwindcss";
 
-/* ---- Тёмная премиальная палитра (синий акцент логотипа) ---- */
 @theme {
-  --color-ink: #0a0c11;        /* фон страницы (почти чёрный с синевой) */
-  --color-graphite: #13161d;   /* карточки */
-  --color-graphite-2: #1b1f28; /* hover карточек */
-  --color-line: #272c37;       /* границы */
-  --color-fog: #9aa4b4;        /* приглушённый текст */
-  --color-cloud: #eef1f6;      /* основной светлый текст */
-  --color-gold: #046afd;       /* фирменный синий */
-  --color-gold-soft: #3b86ff;  /* светлый синий для hover/акцентов */
+  --color-ink: #0a0c11;        
+  --color-graphite: #13161d;  
+  --color-graphite-2: #1b1f28; 
+  --color-line: #272c37;   
+  --color-fog: #9aa4b4;     
+  --color-cloud: #eef1f6;     
+  --color-gold: #046afd;      
+  --color-gold-soft: #3b86ff;  
 
   --font-display: "Geologica", "Manrope", sans-serif;
   --font-body: "Manrope", sans-serif;
@@ -24,7 +23,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Scroll-reveal */
 .reveal {
   opacity: 0;
   transform: translateY(28px);
@@ -32,7 +30,6 @@ body {
 }
 .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
-/* Точечная сетка для фона */
 .dotgrid {
   background-image: radial-gradient(circle, rgba(4, 106, 253, 0.14) 1px, transparent 1px);
   background-size: 26px 26px;

@@ -1,5 +1,4 @@
 <script setup>
-// Замени данные на реальные:
 const contacts = {
   phones: [
     { name: 'Андрей', number: '+7 964 440-31-72', raw: '79644403172' },
@@ -19,9 +18,7 @@ const contacts = {
       <h2 class="reveal mt-3 font-display font-bold text-3xl md:text-4xl" v-reveal="100">Контакты</h2>
 
       <div class="mt-12 grid gap-8 lg:grid-cols-2">
-        <!-- Левая колонка -->
         <div class="reveal space-y-7" v-reveal="150">
-          <!-- Телефоны -->
           <div>
             <p class="text-sm text-fog mb-3">Телефоны</p>
             <div class="space-y-2">
@@ -34,7 +31,6 @@ const contacts = {
             </div>
           </div>
 
-          <!-- Мессенджеры -->
           <div>
             <p class="text-sm text-fog mb-3">Мессенджеры</p>
             <div class="flex flex-wrap gap-3">
@@ -55,7 +51,6 @@ const contacts = {
             </div>
           </div>
 
-          <!-- Адрес и режим -->
           <div class="grid sm:grid-cols-2 gap-6">
             <div>
               <p class="text-sm text-fog mb-2">Адрес</p>
@@ -68,9 +63,7 @@ const contacts = {
           </div>
         </div>
 
-        <!-- Карта -->
         <div class="reveal rounded-2xl overflow-hidden border border-line min-h-[320px] bg-graphite" v-reveal="250">
-          <!-- ЗАМЕНИ src на embed-код своей точки (Яндекс.Карты → «Поделиться» → «Код карты») -->
           <iframe
             src="https://yandex.ru/map-widget/v1/?ll=131.886%2C43.115&z=12"
             width="100%" height="100%" frameborder="0" loading="lazy"

@@ -33,7 +33,6 @@ const steps = [
           </div>
           <p class="mt-4 text-fog leading-relaxed">{{ s.desc }}</p>
 
-          <!-- Этап 1: кнопки связи -->
           <div v-if="s.contacts" class="mt-6 flex flex-wrap gap-3">
             <a :href="contacts.telegram" target="_blank" rel="noopener" class="rounded-full border border-line px-5 py-2.5 text-sm hover:border-gold/60 transition-colors">Telegram</a>
             <a :href="contacts.whatsapp" target="_blank" rel="noopener" class="rounded-full border border-line px-5 py-2.5 text-sm hover:border-gold/60 transition-colors">WhatsApp</a>
@@ -41,8 +40,6 @@ const steps = [
             <a :href="contacts.phone" class="rounded-full border border-line px-5 py-2.5 text-sm hover:border-gold/60 transition-colors">Позвонить</a>
             <a href="#contacts" class="rounded-full border border-line px-5 py-2.5 text-sm hover:border-gold/60 transition-colors">Адрес и офис</a>
           </div>
-
-          <!-- Этап 2: договор -->
           <a v-if="s.contract" :href="CONTRACT_URL" target="_blank" rel="noopener"
              class="mt-6 inline-flex w-fit items-center rounded-full border border-gold/50 px-5 py-2.5 text-sm font-semibold text-gold-soft hover:bg-gold hover:text-white transition-colors">
             Посмотреть договор

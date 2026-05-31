@@ -1,5 +1,4 @@
 <script setup>
-// Ссылку на договор замени: положи файл в /public/dogovor.pdf или укажи свою ссылку.
 const CONTRACT_URL = '/dogovor.pdf'
 
 const points = [

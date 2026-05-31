@@ -1,11 +1,4 @@
-// Приём заявки с сайта → отправка в Telegram и создание лида в Bitrix24.
-//
-// Переменные окружения на Vercel:
-//   TG_BOT_TOKEN    — токен бота от @BotFather
-//   TG_CHAT_ID      — твой Id от @userinfobot (куда слать заявку)
-//   BITRIX_WEBHOOK  — URL входящего вебхука Bitrix24 (со слешем на конце),
-//                     например: https://ТВОЙ-ПОРТАЛ.bitrix24.ru/rest/1/abc123/
-// Любую из интеграций можно не настраивать — тогда она просто пропускается.
+
 
 async function sendToTelegram({ name, phone, city, car, country, budget, contact }) {
   const token = process.env.TG_BOT_TOKEN
@@ -82,13 +75,13 @@ export default async function handler(req, res) {
       return
     }
 
-    // Шлём в оба канала; если один недоступен — второй всё равно сработает
+
     const results = await Promise.allSettled([
       sendToTelegram(data),
       sendToBitrix(data),
     ])
 
-    // Если оба упали — считаем ошибкой
+
     const allFailed = results.every((r) => r.status === 'rejected')
     if (allFailed) throw new Error('all_channels_failed')
 

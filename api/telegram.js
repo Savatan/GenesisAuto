@@ -1,9 +1,5 @@
 import { parse } from 'node-html-parser'
 
-// Функция читает публичную превью-страницу канала t.me/s/<channel>
-// и отдаёт последние посты в JSON. Канал должен быть ПУБЛИЧНЫМ.
-// Имя канала задаётся переменной окружения TG_CHANNEL на Vercel (без @),
-// либо через ?channel=имя в запросе.
 
 const DEFAULT_CHANNEL = process.env.TG_CHANNEL || 'genesis_auto'
 
@@ -46,7 +42,7 @@ export default async function handler(req, res) {
       }
     }).filter((p) => p.text || p.photo)
 
-    posts.reverse() // новые сверху
+    posts.reverse() 
 
     res.setHeader('Cache-Control', 's-maxage=120, stale-while-revalidate=600')
     res.status(200).json(posts)
