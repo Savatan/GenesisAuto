@@ -1,91 +1,99 @@
+// Приём заявки с сайта → отправка в Telegram и создание лида в Bitrix24.
+//
+// Переменные окружения на Vercel:
+//   TG_BOT_TOKEN    — токен бота от @BotFather
+//   TG_CHAT_ID      — твой Id от @userinfobot (куда слать заявку)
+//   BITRIX_WEBHOOK  — URL входящего вебхука Bitrix24 (со слешем на конце),
+//                     например: https://ТВОЙ-ПОРТАЛ.bitrix24.ru/rest/1/abc123/
+// Любую из интеграций можно не настраивать — тогда она просто пропускается.
+
+async function sendToTelegram({ name, phone, city, car, country, budget, contact }) {
+  const token = process.env.TG_BOT_TOKEN
+  const chatId = process.env.TG_CHAT_ID
+  if (!token || !chatId) return
+
+  const text =
+    `🚗 Новая заявка — Genesis Auto\n\n` +
+    `👤 Имя: ${name}\n` +
+    `📞 Телефон: ${phone}\n` +
+    `🏙 Город: ${city || '—'}\n` +
+    `🚘 Интересует: ${car || '—'}\n` +
+    `🌏 Страна: ${country || '—'}\n` +
+    `💰 Бюджет: ${budget || '—'}\n` +
+    `📨 Связь: ${contact || '—'}`
+
+  await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: chatId, text }),
+  })
+}
+
+async function sendToBitrix({ name, phone, city, car, country, budget, contact }) {
+  const hook = process.env.BITRIX_WEBHOOK
+  if (!hook) return
+
+  const comments =
+    `Город: ${city || '—'}\n` +
+    `Интересует: ${car || '—'}\n` +
+    `Страна: ${country || '—'}\n` +
+    `Бюджет: ${budget || '—'}\n` +
+    `Способ связи: ${contact || '—'}`
+
+  await fetch(`${hook}crm.lead.add.json`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      fields: {
+        TITLE: `Заявка с сайта — ${name}`,
+        NAME: name,
+        SOURCE_ID: 'WEB',
+        PHONE: [{ VALUE: phone, VALUE_TYPE: 'WORK' }],
+        COMMENTS: comments,
+      },
+      params: { REGISTER_SONET_EVENT: 'Y' },
+    }),
+  })
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' })
+    res.status(405).json({ error: 'method_not_allowed' })
+    return
   }
-
   try {
-    const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body
+    let body = req.body
+    if (typeof body === 'string') { try { body = JSON.parse(body) } catch { body = {} } }
+    body = body || {}
 
-    const {
-      name = 'Не указано',
-      phone = 'Не указан',
-      city = 'Не указан',
-      car = 'Не указан',
-      country = 'Не указан',
-      budget,
-      contact = 'Не указан',
-    } = body || {}
+    const g = (k) => (body[k] || '').toString().trim()
+    const data = {
+      name: g('name'),
+      phone: g('phone'),
+      city: g('city'),
+      car: g('car'),
+      country: g('country'),
+      budget: g('budget'),
+      contact: g('contact'),
+    }
 
-    // =========================
-    // TELEGRAM
-    // =========================
+    if (!data.name || !data.phone) {
+      res.status(400).json({ error: 'missing_fields' })
+      return
+    }
 
-    const tgMessage = `
-🚘 Новая заявка Genesis Auto
+    // Шлём в оба канала; если один недоступен — второй всё равно сработает
+    const results = await Promise.allSettled([
+      sendToTelegram(data),
+      sendToBitrix(data),
+    ])
 
-👤 Имя: ${name}
-📞 Телефон: ${phone}
-🏙 Город: ${city}
+    // Если оба упали — считаем ошибкой
+    const allFailed = results.every((r) => r.status === 'rejected')
+    if (allFailed) throw new Error('all_channels_failed')
 
-🚗 Автомобиль: ${car}
-🌍 Страна: ${country}
-💰 Бюджет: ${budget || 'Не указан'}
-
-📲 Способ связи: ${contact}
-`
-
-    await fetch(
-      `https://api.telegram.org/bot${process.env.TG_BOT_TOKEN}/sendMessage`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: process.env.TG_CHAT_ID,
-          text: tgMessage,
-        }),
-      }
-    )
-
-    // =========================
-    // BITRIX CRM (WEBHOOK ВСТРОЕН)
-    // =========================
-
-    await fetch(
-      `https://b24-cq1qom.bitrix24.ru/rest/1/5vaga30iglkrs6ep/crm.lead.add.json`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          fields: {
-            TITLE: 'Заявка с сайта Genesis Auto',
-            NAME: name,
-            PHONE: [
-              {
-                VALUE: phone,
-                VALUE_TYPE: 'WORK',
-              },
-            ],
-            COMMENTS: `
-Город: ${city}
-
-Автомобиль: ${car}
-
-Страна: ${country}
-
-Бюджет: ${budget || 'Не указан'}
-
-Способ связи: ${contact}
-            `,
-            SOURCE_DESCRIPTION: 'Сайт Genesis Auto',
-          },
-        }),
-      }
-    )
-
-    return res.status(200).json({ success: true })
+    res.status(200).json({ ok: true })
   } catch (e) {
-    console.error(e)
-
-    return res.status(500).json({ error: 'Server error' })
+    res.status(500).json({ error: 'failed' })
   }
 }
