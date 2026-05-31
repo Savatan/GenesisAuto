@@ -31,10 +31,7 @@ async function load() {
 }
 
 onMounted(() => {
-  requestIdleCallback(() => {
-    load()
-  })
-
+  load()
   timer = setInterval(load, 90000)
 })
 </script>
