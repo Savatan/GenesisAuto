@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 
-// ⚙️ Username вашего Telegram-канала (без @). Тот же впиши в TG_CHANNEL на Vercel.
 const CHANNEL = 'avtomobil1244'
 const channelUrl = `https://t.me/${CHANNEL}`
 
@@ -61,25 +60,35 @@ onUnmounted(() => clearInterval(timer))
 
       <!-- Лента постов -->
       <div v-else-if="status === 'ok'" class="mt-12 grid gap-5 sm:grid-cols-2 items-start">
-        <a v-for="(p, i) in posts" :key="p.id || i"
-           :href="p.url" target="_blank" rel="noopener"
-           class="group flex flex-col overflow-hidden rounded-2xl border border-line bg-white transition-all hover:border-gold/50"
+        <div
+          v-for="(p, i) in posts" :key="p.id || i"
+          class="flex flex-col overflow-hidden rounded-2xl border border-line bg-white"
         >
-          <div v-if="p.photo" class="aspect-[3/2] overflow-hidden">
-            <img :src="p.photo" :alt="'Объявление'" loading="lazy"
-                 class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+          <!-- Видео (играет прямо на сайте) -->
+          <div v-if="p.video" class="bg-black">
+            <video :src="p.video" :poster="p.poster || undefined" controls preload="metadata"
+                   class="w-full max-h-[460px] mx-auto block"></video>
           </div>
+          <!-- Иначе фото -->
+          <a v-else-if="p.photo || p.poster" :href="p.url" target="_blank" rel="noopener"
+             class="block aspect-[3/2] overflow-hidden group">
+            <img :src="p.photo || p.poster" alt="Объявление" loading="lazy"
+                 class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+          </a>
+
           <div class="flex flex-1 flex-col p-6">
             <p class="text-cloud leading-relaxed whitespace-pre-line">{{ p.text || 'Открыть объявление в Telegram' }}</p>
             <div class="mt-5 pt-4 border-t border-line flex items-center justify-between text-sm">
               <span class="text-fog">{{ fmtDate(p.date) }}</span>
-              <span class="text-gold font-semibold">Открыть в Telegram →</span>
+              <a :href="p.url" target="_blank" rel="noopener" class="text-gold font-semibold hover:text-gold-soft transition-colors">
+                Открыть в Telegram →
+              </a>
             </div>
           </div>
-        </a>
+        </div>
       </div>
 
-      <!-- Запасной блок (функция ещё не подключена / нет постов) -->
+      <!-- Запасной блок -->
       <div v-else class="mt-12 rounded-3xl border border-line bg-white p-10 text-center">
         <p class="text-lg font-display font-semibold text-cloud">Объявления публикуются в нашем Telegram-канале</p>
         <p class="mt-2 text-fog">Там — свежие авто с фото, ценами и описанием.</p>
