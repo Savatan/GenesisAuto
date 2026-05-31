@@ -14,7 +14,7 @@ function toggle(i) { open.value = open.value === i ? -1 : i }
 </script>
 
 <template>
-  <section id="faq" class="relative py-24 md:py-32">
+  <section id="faq" class="relative py-28 md:py-44">
     <div class="mx-auto max-w-3xl px-5">
       <p class="reveal text-xs tracking-[0.3em] uppercase text-gold-soft text-center" v-reveal>FAQ</p>
       <h2 class="reveal mt-3 font-display font-bold text-3xl md:text-4xl text-center" v-reveal="100">Часто задаваемые вопросы</h2>

@@ -16,7 +16,7 @@ const steps = [
 </script>
 
 <template>
-  <section id="how" class="relative py-24 md:py-32 bg-graphite/40">
+  <section id="how" class="relative py-28 md:py-44 bg-graphite/40">
     <div class="mx-auto max-w-6xl px-5">
       <p class="reveal text-xs tracking-[0.3em] uppercase text-gold-soft" v-reveal>Процесс</p>
       <h2 class="reveal mt-3 font-display font-bold text-3xl md:text-4xl" v-reveal="100">Как мы работаем</h2>

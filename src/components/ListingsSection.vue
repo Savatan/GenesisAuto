@@ -38,7 +38,7 @@ onUnmounted(() => clearInterval(timer))
 </script>
 
 <template>
-  <section id="listings" class="relative py-24 md:py-32">
+  <section id="listings" class="relative py-28 md:py-44">
     <div class="mx-auto max-w-6xl px-5">
       <div class="flex flex-wrap items-end justify-between gap-4">
         <div>
