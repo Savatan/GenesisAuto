@@ -31,10 +31,12 @@ async function load() {
 }
 
 onMounted(() => {
-  load()
+  requestIdleCallback(() => {
+    load()
+  })
+
   timer = setInterval(load, 90000)
 })
-onUnmounted(() => clearInterval(timer))
 </script>
 
 <template>
