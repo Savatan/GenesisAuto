@@ -5,7 +5,7 @@ const CHANNEL = 'avtomobil1244'
 const channelUrl = `https://t.me/${CHANNEL}`
 
 const posts = ref([])
-const status = ref('loading') // loading | ok | fallback
+const status = ref('loading') 
 const openItems = ref({})
 let timer = null
 
@@ -26,7 +26,7 @@ async function load() {
       status.value = 'ok'
       return
     }
-  } catch { /* запасной блок ниже */ }
+  } catch {  }
   status.value = 'fallback'
 }
 

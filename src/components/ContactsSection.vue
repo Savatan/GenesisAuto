@@ -1,5 +1,4 @@
 <script setup>
-// Проверь/замени данные на реальные:
 const contacts = {
   phones: [
     { name: 'Андрей', number: '+7 (964) 440-31-72', raw: '79644403172' },
