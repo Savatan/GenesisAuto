@@ -1,6 +1,5 @@
 <script setup>
 const CONTRACT_URL = '/dogovor.pdf'
-
 const points = [
   {
     title: 'Работа по официальному договору',
@@ -22,23 +21,24 @@ const points = [
 </script>
 
 <template>
-  <section class="relative py-28 md:py-44">
-    <div class="mx-auto max-w-6xl px-5">
-      <p class="reveal text-xs tracking-[0.3em] uppercase text-gold-soft" v-reveal>Мы гарантируем</p>
-      <h2 class="reveal mt-3 font-display font-bold text-3xl md:text-4xl" v-reveal="100">Почему нам доверяют</h2>
+  <section class="bg-navy py-16 md:py-24">
+    <div class="mx-auto max-w-6xl px-5 text-center">
+      <h2 class="reveal font-display font-bold text-2xl md:text-3xl uppercase tracking-wide text-white" v-reveal>Мы гарантируем</h2>
+      <div class="mx-auto mt-3 h-1 w-16 rounded bg-gold-soft"></div>
 
-      <div class="mt-12 grid gap-5 md:grid-cols-3">
-        <div v-for="(p, i) in points" :key="p.title" v-reveal="i * 120"
-             class="reveal flex flex-col rounded-3xl glass p-8">
-          <span class="flex h-12 w-12 items-center justify-center rounded-xl border border-gold/40 text-gold-soft">
+      <div class="mt-12 grid gap-10 md:grid-cols-3 text-left">
+        <div v-for="(p, i) in points" :key="p.title" v-reveal="i * 120" class="reveal flex items-start gap-4">
+          <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gold/15 text-gold-soft">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path :d="p.icon" /></svg>
           </span>
-          <h3 class="mt-5 font-display font-semibold text-lg leading-snug">{{ p.title }}</h3>
-          <p class="mt-2 text-sm text-fog leading-relaxed">{{ p.desc }}</p>
-          <a v-if="p.contract" :href="CONTRACT_URL" target="_blank" rel="noopener"
-             class="mt-5 inline-flex w-fit items-center rounded-full border border-gold/50 px-5 py-2.5 text-sm font-semibold text-gold-soft hover:bg-gold hover:text-white transition-colors">
-            Посмотреть договор
-          </a>
+          <div>
+            <h3 class="font-display font-semibold text-lg leading-snug text-white">{{ p.title }}</h3>
+            <p class="mt-1.5 text-sm text-white/65 leading-relaxed">{{ p.desc }}</p>
+            <a v-if="p.contract" :href="CONTRACT_URL" target="_blank" rel="noopener"
+               class="mt-3 inline-flex w-fit items-center rounded-full border border-gold-soft/60 px-5 py-2 text-sm font-semibold text-gold-soft hover:bg-gold hover:text-white hover:border-gold transition-colors">
+              Посмотреть договор
+            </a>
+          </div>
         </div>
       </div>
     </div>

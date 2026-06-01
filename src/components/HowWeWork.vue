@@ -16,10 +16,13 @@ const steps = [
 </script>
 
 <template>
-  <section id="how" class="relative py-28 md:py-44 bg-graphite/40">
+  <section id="how" class="relative py-20 md:py-28 bg-graphite-2">
     <div class="mx-auto max-w-6xl px-5">
-      <p class="reveal text-xs tracking-[0.3em] uppercase text-gold-soft" v-reveal>Процесс</p>
-      <h2 class="reveal mt-3 font-display font-bold text-3xl md:text-4xl" v-reveal="100">Как мы работаем</h2>
+      <div class="text-center">
+        <p class="reveal text-xs tracking-[0.3em] uppercase text-gold font-semibold" v-reveal>Процесс</p>
+        <h2 class="reveal mt-3 font-display font-bold text-3xl md:text-4xl text-cloud" v-reveal="100">Как мы работаем</h2>
+        <div class="mx-auto mt-3 h-1 w-16 rounded bg-gold"></div>
+      </div>
 
       <div class="mt-12 grid gap-5 md:grid-cols-2">
         <div
@@ -29,16 +32,16 @@ const steps = [
         >
           <div class="flex items-center gap-4">
             <span class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gold/10 font-display font-bold text-xl text-gold-soft">{{ s.n }}</span>
-            <h3 class="font-display font-semibold text-xl">{{ s.title }}</h3>
+            <h3 class="font-display font-semibold text-xl text-cloud">{{ s.title }}</h3>
           </div>
           <p class="mt-4 text-fog leading-relaxed">{{ s.desc }}</p>
 
           <div v-if="s.contacts" class="mt-6 flex flex-wrap gap-3">
-            <a :href="contacts.telegram" target="_blank" rel="noopener" class="rounded-full border border-line px-5 py-2.5 text-sm hover:border-gold/60 transition-colors">Telegram</a>
-            <a :href="contacts.whatsapp" target="_blank" rel="noopener" class="rounded-full border border-line px-5 py-2.5 text-sm hover:border-gold/60 transition-colors">WhatsApp</a>
-            <a href="#contacts" class="rounded-full border border-line px-5 py-2.5 text-sm hover:border-gold/60 transition-colors">MAX</a>
-            <a :href="contacts.phone" class="rounded-full border border-line px-5 py-2.5 text-sm hover:border-gold/60 transition-colors">Позвонить</a>
-            <a href="#contacts" class="rounded-full border border-line px-5 py-2.5 text-sm hover:border-gold/60 transition-colors">Адрес и офис</a>
+            <a :href="contacts.telegram" target="_blank" rel="noopener" class="rounded-full border border-line px-5 py-2.5 text-sm text-cloud hover:border-gold/60 transition-colors">Telegram</a>
+            <a :href="contacts.whatsapp" target="_blank" rel="noopener" class="rounded-full border border-line px-5 py-2.5 text-sm text-cloud hover:border-gold/60 transition-colors">WhatsApp</a>
+            <a href="#contacts" class="rounded-full border border-line px-5 py-2.5 text-sm text-cloud hover:border-gold/60 transition-colors">MAX</a>
+            <a :href="contacts.phone" class="rounded-full border border-line px-5 py-2.5 text-sm text-cloud hover:border-gold/60 transition-colors">Позвонить</a>
+            <a href="#contacts" class="rounded-full border border-line px-5 py-2.5 text-sm text-cloud hover:border-gold/60 transition-colors">Адрес и офис</a>
           </div>
 
           <a v-if="s.contract" :href="CONTRACT_URL" target="_blank" rel="noopener"
