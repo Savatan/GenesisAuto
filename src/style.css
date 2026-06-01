@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ink: #0a0c11;        
-  --color-graphite: #13161d;  
-  --color-graphite-2: #1b1f28; 
-  --color-line: #272c37;   
-  --color-fog: #9aa4b4;     
-  --color-cloud: #eef1f6;     
-  --color-gold: #046afd;      
-  --color-gold-soft: #3b86ff;  
+  --color-ink: #0a0c11;
+  --color-graphite: #13161d;
+  --color-graphite-2: #1b1f28;
+  --color-line: #272c37;
+  --color-fog: #9aa4b4;
+  --color-cloud: #eef1f6;
+  --color-gold: #046afd;
+  --color-gold-soft: #3b86ff;
 
   --font-display: "Geologica", "Manrope", sans-serif;
   --font-body: "Manrope", sans-serif;
@@ -21,16 +21,42 @@ body {
   color: var(--color-cloud);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
+  /* Кинематографичное свечение: синий + золото + оранжевый */
+  background-image:
+    radial-gradient(38rem 30rem at 12% 6%, rgba(4, 106, 253, 0.13), transparent 60%),
+    radial-gradient(34rem 28rem at 90% 16%, rgba(255, 168, 70, 0.07), transparent 60%),
+    radial-gradient(44rem 36rem at 78% 94%, rgba(255, 110, 40, 0.06), transparent 60%);
+  background-attachment: fixed;
 }
+
 
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 1s ease, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(34px);
+  transition: opacity 1.1s ease, transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
 .dotgrid {
   background-image: radial-gradient(circle, rgba(4, 106, 253, 0.14) 1px, transparent 1px);
   background-size: 26px 26px;
+}
+
+.glass {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.012));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 24px 50px -28px rgba(0, 0, 0, 0.7);
+  transition: transform .45s cubic-bezier(.16, 1, .3, 1), box-shadow .45s ease, border-color .45s ease;
+}
+.glass:hover {
+  transform: translateY(-6px);
+  border-color: rgba(4, 106, 253, 0.5);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 34px 60px -26px rgba(0, 0, 0, 0.8),
+    0 0 48px -12px rgba(4, 106, 253, 0.4);
 }

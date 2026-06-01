@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import { openLead } from '../lead.js'
 
 const scrolled = ref(false)
 const menuOpen = ref(false)
@@ -9,6 +10,10 @@ const links = [
   { label: 'Как мы работаем', href: '#how' },
   { label: 'FAQ', href: '#faq' },
   { label: 'Контакты', href: '#contacts' },
+]
+const phones = [
+  { name: 'Андрей', display: '+7 (964) 440-31-72', raw: '79644403172' },
+  { name: 'Ольга', display: '+7 (904) 627-86-86', raw: '79046278686' },
 ]
 
 function onScroll() { scrolled.value = window.scrollY > 20 }
@@ -29,22 +34,27 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
         </span>
       </a>
 
-      <nav class="hidden md:flex items-center gap-8">
+      <nav class="hidden md:flex items-center gap-7">
         <a v-for="l in links" :key="l.href" :href="l.href"
            class="text-sm text-fog hover:text-cloud transition-colors">{{ l.label }}</a>
       </nav>
 
-      <a href="#lead"
-         class="hidden md:inline-flex items-center rounded-full bg-gold px-6 py-2.5 text-sm font-semibold text-white hover:bg-gold-soft transition-colors">
-        Заказать
-      </a>
-
-      <button class="md:hidden text-cloud" @click="menuOpen = !menuOpen" aria-label="Меню">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path v-if="!menuOpen" d="M4 6h16M4 12h16M4 18h16" />
-          <path v-else d="M6 6l12 12M18 6L6 18" />
-        </svg>
-      </button>
+      <div class="flex items-center gap-5">
+        <div class="hidden lg:flex flex-col items-end leading-tight">
+          <a :href="`tel:+${phones[0].raw}`" class="text-sm font-display font-semibold text-cloud hover:text-gold-soft transition-colors">{{ phones[0].display }}</a>
+          <a :href="`tel:+${phones[1].raw}`" class="text-xs text-fog hover:text-gold-soft transition-colors">{{ phones[1].display }}</a>
+        </div>
+        <button @click="openLead"
+           class="hidden md:inline-flex items-center rounded-full bg-gold px-6 py-2.5 text-sm font-semibold text-white hover:bg-gold-soft transition-colors">
+          Заказать
+        </button>
+        <button class="md:hidden text-cloud" @click="menuOpen = !menuOpen" aria-label="Меню">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path v-if="!menuOpen" d="M4 6h16M4 12h16M4 18h16" />
+            <path v-else d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
+      </div>
     </div>
 
     <transition
@@ -54,8 +64,11 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
       <nav v-if="menuOpen" class="md:hidden bg-ink/95 backdrop-blur-md border-b border-line px-5 py-4 flex flex-col gap-4">
         <a v-for="l in links" :key="l.href" :href="l.href" @click="menuOpen = false"
            class="text-fog hover:text-cloud">{{ l.label }}</a>
-        <a href="#lead" @click="menuOpen = false"
-           class="rounded-full bg-gold px-5 py-2.5 text-center text-sm font-semibold text-white">Заказать</a>
+        <div class="flex flex-col gap-1 pt-2 border-t border-line">
+          <a v-for="p in phones" :key="p.raw" :href="`tel:+${p.raw}`" class="font-display font-semibold text-cloud">{{ p.display }} <span class="text-fog text-sm font-normal">— {{ p.name }}</span></a>
+        </div>
+        <button @click="menuOpen = false; openLead()"
+           class="rounded-full bg-gold px-5 py-2.5 text-center text-sm font-semibold text-white">Заказать</button>
       </nav>
     </transition>
   </header>

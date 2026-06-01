@@ -5,7 +5,7 @@ const CHANNEL = 'avtomobil1244'
 const channelUrl = `https://t.me/${CHANNEL}`
 
 const posts = ref([])
-const status = ref('loading') 
+const status = ref('loading') // loading | ok | fallback
 const openItems = ref({})
 let timer = null
 
@@ -26,15 +26,15 @@ async function load() {
       status.value = 'ok'
       return
     }
-  } catch {  }
+  } catch { /* запасной блок ниже */ }
   status.value = 'fallback'
 }
 
 onMounted(() => {
-  setTimeout(load, 500)
-
+  load()
   timer = setInterval(load, 90000)
 })
+onUnmounted(() => clearInterval(timer))
 </script>
 
 <template>
@@ -55,7 +55,7 @@ onMounted(() => {
       </div>
 
       <div v-else-if="status === 'ok'" class="mt-12 grid gap-5 sm:grid-cols-2">
-        <div v-for="(p, i) in posts" :key="p.id || i" class="flex flex-col overflow-hidden rounded-2xl border border-line bg-graphite">
+        <div v-for="(p, i) in posts" :key="p.id || i" class="flex flex-col overflow-hidden rounded-2xl glass">
           <div v-if="p.video" class="aspect-video bg-black overflow-hidden">
             <video :src="p.video" :poster="p.poster || undefined" controls preload="metadata" class="h-full w-full object-cover"></video>
           </div>

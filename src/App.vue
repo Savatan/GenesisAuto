@@ -8,6 +8,7 @@ import FaqSection from './components/FaqSection.vue'
 import ContactsSection from './components/ContactsSection.vue'
 import LeadForm from './components/LeadForm.vue'
 import TheFooter from './components/TheFooter.vue'
+import LeadModal from './components/LeadModal.vue'
 </script>
 
 <template>
@@ -22,4 +23,5 @@ import TheFooter from './components/TheFooter.vue'
     <LeadForm />
   </main>
   <TheFooter />
+  <LeadModal />
 </template>

@@ -29,7 +29,7 @@ const points = [
 
       <div class="mt-12 grid gap-5 md:grid-cols-3">
         <div v-for="(p, i) in points" :key="p.title" v-reveal="i * 120"
-             class="reveal flex flex-col rounded-3xl border border-line bg-graphite p-8 transition-colors hover:border-gold/40">
+             class="reveal flex flex-col rounded-3xl glass p-8">
           <span class="flex h-12 w-12 items-center justify-center rounded-xl border border-gold/40 text-gold-soft">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path :d="p.icon" /></svg>
           </span>
