@@ -13,7 +13,7 @@ const contacts = {
   hours: 'Пн–Пт, 10:00–19:00',
 }
 
-const GIS_WIDGET = ''
+const GIS_WIDGET = 'https://makemap.2gis.ru/widget?data=eJw1kEtPwzAQhP_LcmxU7LwdqYfKQKEyVVJV4qUeotoEIzeOHIcSov53nBR83G9mvLMDaMOFEXwl9FFYI0UL2dsAtm8EZHAnStsZAR40RjfC2IkPcNBKG8evkJ_id99xK60aHWidF5ZTgthzYQkN0ctthdhN0doVRSxcOCkX7cHIxkpdO0N-v5yhNSs6Qk-I7YpuQ3vEkm3FR0NSdPJUofWu-OIUI3a9rTZ0hhhznMYuePvZL_tHTvucklNeLcYPfh5qLr4hw-j_nT2oLgX7cf2_drmWtXX6g3ZHkHVpp_I4wHPix5Efe2Ewx6GPo3TvAiSHLEri896DY9nkupWXBgOo0kI2aXESkBgHaRQRP_JAjfySlwQ4JCROMAndglofHUhdqjuFVurpQwj1Ok2t6cT5FyFqe5g" sandbox="allow-modals allow-forms allow-scripts allow-same-origin allow-popups allow-top-navigation-by-user-activation'
 </script>
 
 <template>
