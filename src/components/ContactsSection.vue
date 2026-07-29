@@ -1,4 +1,6 @@
 <script setup>
+import LeadFormCard from './LeadFormCard.vue'
+
 const contacts = {
   phones: [
     { name: 'Андрей', number: '+7 (964) 440-31-72', raw: '79644403172' },
@@ -6,74 +8,105 @@ const contacts = {
   ],
   telegram: 'https://t.me/avtomobil1244',
   whatsapp: 'https://wa.me/79644403172',
-  address: 'г. Владивосток, ул. Русская, 41А, офис 307',
+  gis: 'https://2gis.ru/search/%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%B2%D0%BE%D1%81%D1%82%D0%BE%D0%BA%20%D0%94%D0%BD%D0%B5%D0%BF%D1%80%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F%2021%D0%B2',
+  address: 'Россия, Приморский край, г. Владивосток, ул. Днепровская, 21 В',
   hours: 'Пн–Пт, 10:00–19:00',
-  mapQuery: 'Владивосток, улица Русская, 41А',
+  mapQuery: 'Владивосток, улица Днепровская, 21В',
 }
 const mapSrc = `https://yandex.ru/map-widget/v1/?mode=search&text=${encodeURIComponent(contacts.mapQuery)}&z=16`
 const mapLink = `https://yandex.ru/maps/?text=${encodeURIComponent(contacts.mapQuery)}`
 </script>
 
 <template>
-  <section id="contacts" class="relative py-28 md:py-44">
+  <section id="contacts" class="relative py-20 md:py-28 bg-white">
     <div class="mx-auto max-w-6xl px-5">
-      <p class="reveal text-xs tracking-[0.3em] uppercase text-gold-soft" v-reveal>Связь</p>
-      <h2 class="reveal mt-3 font-display font-bold text-3xl md:text-4xl" v-reveal="100">Контакты</h2>
+      <p class="reveal text-xs tracking-[0.3em] uppercase text-gold font-semibold" v-reveal>Связь</p>
+      <h2 class="reveal mt-3 font-display font-bold text-3xl md:text-4xl text-cloud" v-reveal="100">Контактная информация</h2>
+      <p class="reveal mt-3 max-w-xl text-fog" v-reveal="150">Для оперативной связи с нами вы можете воспользоваться удобными для вас способами.</p>
 
-      <div class="mt-12 grid gap-8 lg:grid-cols-2">
-        <div class="reveal space-y-7" v-reveal="150">
-          <div>
-            <p class="text-sm text-fog mb-3">Телефоны</p>
-            <div class="space-y-2">
-              <a v-for="p in contacts.phones" :key="p.raw" :href="`tel:+${p.raw}`"
-                 class="flex items-center gap-3 text-lg hover:text-gold-soft transition-colors">
-                <span class="text-gold-soft">☎</span>
-                <span class="font-display font-semibold">{{ p.number }}</span>
-                <span class="text-fog text-sm">— {{ p.name }}</span>
-              </a>
+      <div class="mt-12 grid gap-10 lg:grid-cols-2 lg:items-start">
+        <div class="space-y-9">
+          <div class="reveal grid sm:grid-cols-2 gap-9" v-reveal="200">
+            <div>
+              <p class="font-display font-semibold text-lg text-cloud mb-4">Связаться с нами</p>
+              <div class="space-y-3 text-sm">
+                <a v-for="p in contacts.phones" :key="p.raw" :href="`tel:+${p.raw}`"
+                   class="flex items-center gap-3 text-cloud hover:text-gold transition-colors">
+                  <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gold/10 text-gold">☎</span>
+                  <span class="font-display font-semibold whitespace-nowrap">{{ p.number }}</span>
+                  <span class="text-fog whitespace-nowrap">— {{ p.name }}</span>
+                </a>
+                <a :href="contacts.telegram" target="_blank" rel="noopener" class="flex items-center gap-3 text-cloud hover:text-gold transition-colors">
+                  <span class="flex h-9 w-9 items-center justify-center rounded-full bg-gold/10 text-gold">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3l-3.3 15.6c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9-8.1c.4-.3-.1-.5-.6-.2L6.5 13.6l-4.8-1.5c-1-.3-1-1 .2-1.5l18.7-7.2c.9-.3 1.6.2 1.3 1.4z"/></svg>
+                  </span>
+                  Написать в Telegram
+                </a>
+                <a href="#lead" class="flex items-center gap-3 text-cloud hover:text-gold transition-colors">
+                  <span class="flex h-9 w-9 items-center justify-center rounded-full bg-gold/10 text-gold text-[9px] font-bold">MAX</span>
+                  Написать в MAX
+                </a>
+                <a :href="contacts.whatsapp" target="_blank" rel="noopener" class="flex items-center gap-3 text-cloud hover:text-gold transition-colors">
+                  <span class="flex h-9 w-9 items-center justify-center rounded-full bg-gold/10 text-gold">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1012 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 .9-2.2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.4.5c-.2.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.2.1.4.1.5-.1l.7-.9c.2-.2.4-.2.6-.1l1.9.9c.2.1.4.2.4.3.1.2.1.7-.1 1.3z"/></svg>
+                  </span>
+                  WhatsApp
+                </a>
+              </div>
+            </div>
+
+            <div>
+              <p class="font-display font-semibold text-lg text-cloud mb-4">Подписаться на нас</p>
+              <div class="space-y-3 text-sm">
+                <a :href="contacts.telegram" target="_blank" rel="noopener" class="flex items-center gap-3 text-cloud hover:text-gold transition-colors">
+                  <span class="flex h-9 w-9 items-center justify-center rounded-full bg-gold/10 text-gold">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3l-3.3 15.6c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9-8.1c.4-.3-.1-.5-.6-.2L6.5 13.6l-4.8-1.5c-1-.3-1-1 .2-1.5l18.7-7.2c.9-.3 1.6.2 1.3 1.4z"/></svg>
+                  </span>
+                  Telegram-канал
+                </a>
+                <a href="#contacts" class="flex items-center gap-3 text-cloud hover:text-gold transition-colors">
+                  <span class="flex h-9 w-9 items-center justify-center rounded-full bg-gold/10 text-gold text-[8px] font-bold">Авито</span>
+                  Авито
+                </a>
+                <a :href="contacts.gis" target="_blank" rel="noopener" class="flex items-center gap-3 text-cloud hover:text-gold transition-colors">
+                  <span class="flex h-9 w-9 items-center justify-center rounded-full bg-gold/10 text-gold text-[9px] font-bold">2GIS</span>
+                  2ГИС
+                </a>
+              </div>
             </div>
           </div>
 
-          <div>
-            <p class="text-sm text-fog mb-3">Мессенджеры</p>
-            <div class="flex flex-wrap gap-3">
-              <a :href="contacts.telegram" target="_blank" rel="noopener"
-                 class="flex items-center gap-2 rounded-full border border-line px-5 py-2.5 hover:border-gold/60 transition-colors">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-gold-soft"><path d="M21.9 4.3l-3.3 15.6c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9-8.1c.4-.3-.1-.5-.6-.2L6.5 13.6l-4.8-1.5c-1-.3-1-1 .2-1.5l18.7-7.2c.9-.3 1.6.2 1.3 1.4z"/></svg>
-                Telegram
-              </a>
-              <a :href="contacts.whatsapp" target="_blank" rel="noopener"
-                 class="flex items-center gap-2 rounded-full border border-line px-5 py-2.5 hover:border-gold/60 transition-colors">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-gold-soft"><path d="M12 2a10 10 0 00-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1012 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 .9-2.2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.4.5c-.2.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.2.1.4.1.5-.1l.7-.9c.2-.2.4-.2.6-.1l1.9.9c.2.1.4.2.4.3.1.2.1.7-.1 1.3z"/></svg>
-                WhatsApp
-              </a>
-              <a href="#lead"
-                 class="flex items-center gap-2 rounded-full border border-line px-5 py-2.5 hover:border-gold/60 transition-colors">
-                MAX
-              </a>
+          <div class="reveal grid sm:grid-cols-2 gap-6 text-sm" v-reveal="250">
+            <div>
+              <p class="text-fog mb-1.5">Адрес</p>
+              <p class="font-display text-cloud">{{ contacts.address }}</p>
+              <div class="mt-2 flex flex-wrap gap-4">
+                <a :href="mapLink" target="_blank" rel="noopener" class="text-gold hover:text-gold-soft transition-colors">Яндекс.Карты →</a>
+                <a :href="contacts.gis" target="_blank" rel="noopener" class="text-gold hover:text-gold-soft transition-colors">2ГИС →</a>
+              </div>
+            </div>
+            <div>
+              <p class="text-fog mb-1.5">Режим работы</p>
+              <p class="font-display text-cloud">{{ contacts.hours }}</p>
             </div>
           </div>
 
-          <div class="grid sm:grid-cols-2 gap-6">
-            <div>
-              <p class="text-sm text-fog mb-2">Адрес</p>
-              <p class="font-display">{{ contacts.address }}</p>
-              <a :href="mapLink" target="_blank" rel="noopener" class="mt-2 inline-block text-sm text-gold-soft hover:text-gold transition-colors">Открыть в Яндекс.Картах →</a>
-            </div>
-            <div>
-              <p class="text-sm text-fog mb-2">Режим работы</p>
-              <p class="font-display">{{ contacts.hours }}</p>
-            </div>
+          <div class="reveal rounded-2xl overflow-hidden border border-line min-h-[300px] bg-graphite-2" v-reveal="300">
+            <iframe
+              :src="mapSrc"
+              width="100%" height="100%" frameborder="0" loading="lazy"
+              class="min-h-[300px] w-full"
+              title="Карта — адрес офиса"
+            ></iframe>
           </div>
         </div>
 
-        <div class="reveal rounded-2xl overflow-hidden border border-line min-h-[340px] bg-graphite" v-reveal="250">
-          <iframe
-            :src="mapSrc"
-            width="100%" height="100%" frameborder="0" loading="lazy"
-            class="min-h-[340px] w-full"
-            title="Карта — адрес офиса"
-          ></iframe>
+        <div id="lead" class="reveal scroll-mt-28" v-reveal="250">
+          <div class="mb-5">
+            <h3 class="font-display font-bold text-2xl text-cloud">Оставить заявку</h3>
+            <p class="mt-2 text-fog">Заполните бланк заказа — перезвоним и подберём авто под ваш бюджет.</p>
+          </div>
+          <LeadFormCard />
         </div>
       </div>
     </div>

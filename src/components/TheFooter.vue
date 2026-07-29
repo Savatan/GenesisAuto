@@ -13,8 +13,9 @@ const year = new Date().getFullYear()
             Genesis <span class="text-gold-soft">Auto</span>
           </span>
           <p class="mt-4 leading-relaxed">
-            Авто, мото и спецтехника из Китая, Кореи и Японии под заказ. По официальному договору, без переплат посредникам. Владивосток.
+            Авто, мото и спецтехника из Китая, Кореи и Японии под заказ. По официальному договору, без переплат посредникам.
           </p>
+          <p class="mt-3 text-sm">Россия, Приморский край, г. Владивосток, ул. Днепровская, 21 В</p>
         </div>
         <a href="#lead" class="group inline-flex items-center gap-2 self-start rounded-full bg-gold px-8 py-4 font-semibold text-white shadow-lg shadow-gold/30 transition-all hover:bg-gold-soft hover:-translate-y-0.5">
           Оставить заявку
@@ -31,7 +32,7 @@ const year = new Date().getFullYear()
           <p>ИНН: ____________</p>
           <p>ОГРНИП: ____________</p>
           <p>БИК: ____________</p>
-          <p>Адрес: ____________</p>
+          <p>Адрес: г. Владивосток, ул. Днепровская, 21 В</p>
         </div>
 
         <div class="space-y-2 text-sm">
@@ -50,9 +51,17 @@ const year = new Date().getFullYear()
                class="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 hover:border-gold/60 hover:text-gold-soft hover:-translate-y-0.5 transition-all">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3l-3.3 15.6c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9-8.1c.4-.3-.1-.5-.6-.2L6.5 13.6l-4.8-1.5c-1-.3-1-1 .2-1.5l18.7-7.2c.9-.3 1.6.2 1.3 1.4z"/></svg>
             </a>
-            <a href="#lead" aria-label="MAX"
-               class="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 hover:border-gold/60 hover:text-gold-soft hover:-translate-y-0.5 transition-all text-xs font-bold">
+            <a href="#contacts" aria-label="MAX"
+               class="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 hover:border-gold/60 hover:text-gold-soft hover:-translate-y-0.5 transition-all text-[10px] font-bold">
               MAX
+            </a>
+            <a href="https://2gis.ru/search/%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%B2%D0%BE%D1%81%D1%82%D0%BE%D0%BA%20%D0%94%D0%BD%D0%B5%D0%BF%D1%80%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F%2021%D0%B2" target="_blank" rel="noopener" aria-label="2GIS"
+               class="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 hover:border-gold/60 hover:text-gold-soft hover:-translate-y-0.5 transition-all text-[10px] font-bold">
+              2GIS
+            </a>
+            <a href="#contacts" aria-label="Авито"
+               class="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 hover:border-gold/60 hover:text-gold-soft hover:-translate-y-0.5 transition-all text-[9px] font-bold">
+              Авито
             </a>
           </div>
         </div>

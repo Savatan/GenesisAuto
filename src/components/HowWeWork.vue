@@ -16,7 +16,7 @@ const steps = [
 </script>
 
 <template>
-  <section id="how" class="relative py-20 md:py-28 bg-graphite-2">
+  <section id="how" class="relative py-20 md:py-28 bg-white">
     <div class="mx-auto max-w-6xl px-5">
       <div class="text-center">
         <p class="reveal text-xs tracking-[0.3em] uppercase text-gold font-semibold" v-reveal>Процесс</p>
@@ -31,7 +31,7 @@ const steps = [
           :class="{ 'md:col-span-2': s.contacts }"
         >
           <div class="flex items-center gap-4">
-            <span class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gold/10 font-display font-bold text-xl text-gold-soft">{{ s.n }}</span>
+            <span class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gold/10 font-display font-bold text-xl text-gold">{{ s.n }}</span>
             <h3 class="font-display font-semibold text-xl text-cloud">{{ s.title }}</h3>
           </div>
           <p class="mt-4 text-fog leading-relaxed">{{ s.desc }}</p>
@@ -45,7 +45,7 @@ const steps = [
           </div>
 
           <a v-if="s.contract" :href="CONTRACT_URL" target="_blank" rel="noopener"
-             class="mt-6 inline-flex w-fit items-center rounded-full border border-gold/50 px-5 py-2.5 text-sm font-semibold text-gold-soft hover:bg-gold hover:text-white transition-colors">
+             class="mt-6 inline-flex w-fit items-center rounded-full border border-gold/50 px-5 py-2.5 text-sm font-semibold text-gold hover:bg-gold hover:text-white transition-colors">
             Посмотреть договор
           </a>
         </div>

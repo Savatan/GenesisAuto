@@ -1,5 +1,3 @@
-
-
 async function sendToTelegram({ name, phone, city, car, country, budget, contact }) {
   const token = process.env.TG_BOT_TOKEN
   const chatId = process.env.TG_CHAT_ID
@@ -61,13 +59,8 @@ export default async function handler(req, res) {
 
     const g = (k) => (body[k] || '').toString().trim()
     const data = {
-      name: g('name'),
-      phone: g('phone'),
-      city: g('city'),
-      car: g('car'),
-      country: g('country'),
-      budget: g('budget'),
-      contact: g('contact'),
+      name: g('name'), phone: g('phone'), city: g('city'), car: g('car'),
+      country: g('country'), budget: g('budget'), contact: g('contact'),
     }
 
     if (!data.name || !data.phone) {
@@ -75,13 +68,10 @@ export default async function handler(req, res) {
       return
     }
 
-
     const results = await Promise.allSettled([
       sendToTelegram(data),
       sendToBitrix(data),
     ])
-
-
     const allFailed = results.every((r) => r.status === 'rejected')
     if (allFailed) throw new Error('all_channels_failed')
 

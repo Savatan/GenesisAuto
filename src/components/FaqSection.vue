@@ -14,18 +14,19 @@ function toggle(i) { open.value = open.value === i ? -1 : i }
 </script>
 
 <template>
-  <section id="faq" class="relative py-28 md:py-44">
-    <div class="mx-auto max-w-3xl px-5">
-      <p class="reveal text-xs tracking-[0.3em] uppercase text-gold-soft text-center" v-reveal>FAQ</p>
-      <h2 class="reveal mt-3 font-display font-bold text-3xl md:text-4xl text-center" v-reveal="100">Часто задаваемые вопросы</h2>
+  <section id="faq" class="relative py-20 md:py-28 bg-white">
+    <div class="mx-auto max-w-5xl px-5">
+      <p class="reveal text-xs tracking-[0.3em] uppercase text-gold text-center font-semibold" v-reveal>FAQ</p>
+      <h2 class="reveal mt-3 font-display font-bold text-3xl md:text-4xl text-center text-cloud" v-reveal="100">Часто задаваемые вопросы</h2>
+      <div class="mx-auto mt-3 h-1 w-16 rounded bg-gold"></div>
 
-      <div class="mt-12 space-y-3">
+      <div class="mt-12 grid gap-3 md:grid-cols-2 md:items-start">
         <div v-for="(f, i) in faqs" :key="i"
-             class="rounded-2xl border border-line bg-graphite overflow-hidden transition-colors"
-             :class="{ 'border-gold/40': open === i }">
+             class="card-light rounded-2xl overflow-hidden"
+             :class="{ '!border-gold/50': open === i }">
           <button type="button" class="flex w-full items-center justify-between gap-4 px-6 py-5 text-left" @click="toggle(i)">
             <span class="font-display font-semibold text-cloud">{{ f.q }}</span>
-            <span class="shrink-0 text-gold-soft transition-transform duration-300" :style="{ transform: open === i ? 'rotate(45deg)' : 'rotate(0deg)' }">
+            <span class="shrink-0 text-gold transition-transform duration-300" :style="{ transform: open === i ? 'rotate(45deg)' : 'rotate(0deg)' }">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
             </span>
           </button>

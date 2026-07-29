@@ -18,12 +18,11 @@ export default async function handler(req, res) {
 
     const posts = messages.map((m) => {
       const mHtml = m.toString()
-      const dataPost = m.getAttribute('data-post') || '' // "channel/123"
+      const dataPost = m.getAttribute('data-post') || ''
 
       const textEl = m.querySelector('.tgme_widget_message_text')
       const text = textEl ? (textEl.structuredText || textEl.text || '') : ''
 
-      // Фото
       let photo = null
       const photoEl = m.querySelector('.tgme_widget_message_photo_wrap')
       if (photoEl) {
@@ -32,7 +31,6 @@ export default async function handler(req, res) {
         if (mm) photo = mm[1]
       }
 
-      // Видео (обычное, gif, кружок) — берём src тега <video>
       let video = null
       const vEl = m.querySelector('video')
       if (vEl) video = vEl.getAttribute('src') || null
@@ -41,7 +39,6 @@ export default async function handler(req, res) {
         if (vm) video = vm[1]
       }
 
-      // Постер (превью-кадр) видео
       let poster = null
       const thumbEl =
         m.querySelector('.tgme_widget_message_video_thumb') ||
@@ -66,7 +63,7 @@ export default async function handler(req, res) {
       }
     }).filter((p) => p.text || p.photo || p.video)
 
-    posts.reverse() // новые сверху
+    posts.reverse()
 
     res.setHeader('Cache-Control', 's-maxage=120, stale-while-revalidate=600')
     res.status(200).json(posts)
