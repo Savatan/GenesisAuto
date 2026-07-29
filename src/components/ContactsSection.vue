@@ -11,10 +11,9 @@ const contacts = {
   gis: 'https://2gis.ru/search/%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%B2%D0%BE%D1%81%D1%82%D0%BE%D0%BA%20%D0%94%D0%BD%D0%B5%D0%BF%D1%80%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F%2021%D0%B2',
   address: 'Россия, Приморский край, г. Владивосток, ул. Днепровская, 21 В',
   hours: 'Пн–Пт, 10:00–19:00',
-  mapQuery: 'Владивосток, улица Днепровская, 21В',
 }
-const mapSrc = `https://yandex.ru/map-widget/v1/?mode=search&text=${encodeURIComponent(contacts.mapQuery)}&z=16`
-const mapLink = `https://yandex.ru/maps/?text=${encodeURIComponent(contacts.mapQuery)}`
+
+const GIS_WIDGET = ''
 </script>
 
 <template>
@@ -80,10 +79,7 @@ const mapLink = `https://yandex.ru/maps/?text=${encodeURIComponent(contacts.mapQ
             <div>
               <p class="text-fog mb-1.5">Адрес</p>
               <p class="font-display text-cloud">{{ contacts.address }}</p>
-              <div class="mt-2 flex flex-wrap gap-4">
-                <a :href="mapLink" target="_blank" rel="noopener" class="text-gold hover:text-gold-soft transition-colors">Яндекс.Карты →</a>
-                <a :href="contacts.gis" target="_blank" rel="noopener" class="text-gold hover:text-gold-soft transition-colors">2ГИС →</a>
-              </div>
+              <a :href="contacts.gis" target="_blank" rel="noopener" class="mt-2 inline-block text-gold hover:text-gold-soft transition-colors">Открыть в 2ГИС →</a>
             </div>
             <div>
               <p class="text-fog mb-1.5">Режим работы</p>
@@ -91,13 +87,20 @@ const mapLink = `https://yandex.ru/maps/?text=${encodeURIComponent(contacts.mapQ
             </div>
           </div>
 
-          <div class="reveal rounded-2xl overflow-hidden border border-line min-h-[300px] bg-graphite-2" v-reveal="300">
+          <div class="reveal rounded-2xl overflow-hidden border border-line bg-graphite-2" v-reveal="300">
             <iframe
-              :src="mapSrc"
-              width="100%" height="100%" frameborder="0" loading="lazy"
-              class="min-h-[300px] w-full"
-              title="Карта — адрес офиса"
+              v-if="GIS_WIDGET"
+              :src="GIS_WIDGET"
+              width="100%" height="340" frameborder="0" loading="lazy"
+              class="block w-full"
+              title="Карта 2ГИС — адрес офиса"
             ></iframe>
+            <a v-else :href="contacts.gis" target="_blank" rel="noopener"
+               class="flex min-h-[300px] flex-col items-center justify-center gap-3 p-8 text-center transition-colors hover:bg-white">
+              <span class="flex h-14 w-14 items-center justify-center rounded-full bg-gold/10 text-gold font-bold">2GIS</span>
+              <span class="font-display font-semibold text-cloud">{{ contacts.address }}</span>
+              <span class="text-sm text-gold">Посмотреть на карте 2ГИС →</span>
+            </a>
           </div>
         </div>
 

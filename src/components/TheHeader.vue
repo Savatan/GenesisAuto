@@ -28,7 +28,7 @@ const socials = [
 </script>
 
 <template>
-  <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-line shadow-sm">
+ <header class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-line/70">
     <div class="mx-auto max-w-[1360px] px-4 flex items-center justify-between h-16 md:h-20 gap-3">
       <a href="#hero" class="flex items-center gap-2.5 shrink-0">
         <img src="/logo.png" alt="Genesis Auto" class="h-8 md:h-9 w-auto" />
