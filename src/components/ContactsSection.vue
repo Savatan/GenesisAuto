@@ -13,7 +13,7 @@ const contacts = {
   hours: 'Пн–Пт, 10:00–19:00',
 }
 
-const GIS_WIDGET = 'https://widgets.2gis.com/widget?type=firmsonmap&options=%7B%22pos%22%3A%7B%22lat%22%3A43.142008%2C%22lon%22%3A131.926483%2C%22zoom%22%3A17%7D%2C%22opt%22%3A%7B%22city%22%3A%22vladivostok%22%7D%7D'
+const GIS_WIDGET = ''
 </script>
 
 <template>
